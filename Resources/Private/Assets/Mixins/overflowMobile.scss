@@ -1,0 +1,7 @@
+@mixin overflow-mobile($y: auto) {
+  @if $y != null {
+    overflow-y: $y;
+  }
+
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,0 +1,26 @@
+@mixin flex-img-base($object-fit: scale-down) {
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  flex: 0 0 auto;
+  align-self: center;
+  object-fit: $object-fit;
+
+  &[src$=".svg"] {
+    object-fit: fill;
+    width: 100%;
+  }
+}
+
+@mixin flex-img {
+  @include flex-img-base;
+
+  max-width: 100%;
+}
+
+@mixin flex-img-full {
+  @include flex-img-base(contain);
+
+  width: 100%;
+}

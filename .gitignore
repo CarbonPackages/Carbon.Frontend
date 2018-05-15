@@ -1,0 +1,12 @@
+node_modules
+
+._*
+*.example
+.thumbs
+.idea
+.vscode
+.DS_Store
+.sass-cache
+
+/Build
+/yarn.lock

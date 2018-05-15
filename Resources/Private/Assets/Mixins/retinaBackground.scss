@@ -1,0 +1,12 @@
+@mixin retina-background($file-1x, $file-2x, $size) {
+  background-image: resolve($file-1x);
+  @if $size {
+    background-size: $size;
+  } @else {
+    background-size: size($file-1x);
+  }
+
+  @media only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+    background-image: resolve($file-2x);
+  }
+}

@@ -1,0 +1,8 @@
+@mixin hyphens-auto($limit: auto 5) {
+  hyphens: auto;
+  hyphenate-limit-lines: $limit;
+}
+
+@mixin hyphens-manual {
+  hyphens: manual;
+}

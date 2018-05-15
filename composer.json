@@ -1,0 +1,48 @@
+{
+    "name": "carbon/frontend",
+    "type": "neos-carbon",
+    "description": "Some frontend resouces for Neos CMS",
+    "license": "MIT",
+    "keywords": ["frontend", "helper", "carbon"],
+    "require": {
+        "neos/neos": "~3.0 || ~4.0"
+    },
+    "authors": [
+        {
+            "name": "Jon Uhlmann",
+            "email": "me@jonnitto.ch",
+            "homepage": "https://jonnitto.ch",
+            "role": "Developer"
+        }
+    ],
+    "archive": {
+        "exclude": [
+            ".editorconfig",
+            ".eslintignore",
+            ".eslintrc",
+            ".gitattributes",
+            ".github",
+            ".gitignore",
+            ".jshintrc",
+            ".nvmrc",
+            ".prettierignore",
+            ".stylelintrc",
+            ".yarnclean",
+            "CODE_OF_CONDUCT.md",
+            "gulp_global.yaml",
+            "package.json"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "Carbon\\Frontend\\": "Classes"
+        }
+    },
+    "extra": {
+        "marketplace-account": "me@jonnitto.ch",
+        "installer-name": "Carbon.Frontend",
+        "neos": {
+            "package-key": "Carbon.Frontend"
+        }
+    }
+}
