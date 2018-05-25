@@ -31,14 +31,10 @@
   &::before,
   &::after {
     display: inline-block;
-    color: #222;
+    color: #adadad;
     opacity: 0.5;
     transition: opacity 0.2s ease;
     line-height: $height;
-
-    .basic-backend & {
-      color: #fff;
-    }
   }
 
   &::after {
