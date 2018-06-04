@@ -1,7 +1,6 @@
 import html from "./html";
 import isLive from "./isLive";
 import language from "./language";
-import lastVisitedNode from "./lastVisitedNode";
 
 // Create Singleton
 const _data = {};
@@ -36,6 +35,5 @@ Object.freeze(Carbon);
 Carbon("html", html);
 Carbon("isLive", isLive);
 Carbon("language", language);
-Carbon("lastVisitedNode", lastVisitedNode);
 
 export default Carbon;
