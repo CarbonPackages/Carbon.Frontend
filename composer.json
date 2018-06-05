@@ -4,9 +4,6 @@
     "description": "Some frontend resouces for Neos CMS",
     "license": "MIT",
     "keywords": ["frontend", "helper", "carbon"],
-    "require": {
-        "neos/neos": "~3.0 || ~4.0"
-    },
     "authors": [
         {
             "name": "Jon Uhlmann",
