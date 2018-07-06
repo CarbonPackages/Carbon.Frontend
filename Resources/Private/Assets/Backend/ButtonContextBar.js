@@ -48,13 +48,14 @@ function setElement(callback) {
     }
 }
 
-function setButtonState(
-    button,
-    state = SITE_DOC.body.classList.contains(settings.toggleClass)
-) {
+function setButtonState(button, activeState = isActiveState()) {
     if (button) {
-        button.style.background = state ? "#00adee" : "transparent";
+        button.style.background = activeState ? "#00adee" : "transparent";
     }
+}
+
+function isActiveState() {
+    return SITE_DOC.body.classList.contains(settings.toggleClass);
 }
 
 function addButton() {
@@ -94,8 +95,16 @@ function addButton() {
             setButtonState(button);
         };
         button.onclick = () => {
+            let activeState = isActiveState();
             button.blur();
-            triggerButton(button);
+            triggerButton(button, activeState);
+
+            if (!activeState && typeof settings.onActive == "function") {
+                settings.onActive();
+            }
+            if (activeState && typeof settings.onInactive == "function") {
+                settings.onInactive();
+            }
         };
         button.innerHTML =
             settings.icon in ICONS ? ICONS[settings.icon] : settings.icon;
@@ -142,7 +151,6 @@ function triggerButton(button) {
 
 function removeButton(button) {
     buttonCallback(button, button => {
-        console.log(button);
         button.parentElement.removeChild(button);
     });
 
