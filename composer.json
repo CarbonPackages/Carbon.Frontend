@@ -12,6 +12,9 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "neos/neos": "^3.0 || ^4.0"
+    },
     "archive": {
         "exclude": [
             ".editorconfig",

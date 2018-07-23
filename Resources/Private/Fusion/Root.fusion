@@ -1,0 +1,11 @@
+prototype(Neos.Neos:Page) {
+    htmlTag.attributes.class = Neos.Fusion:RawArray {
+        live = ${node.context.inBackend ? '-backend' : '-live'}
+        javascript = '-nojs'
+    }
+    head.javascripts.replaceClass = Neos.Fusion:Tag {
+        tagName = 'script'
+        attributes.type = 'text/javascript'
+        content = '(function(){var x=document.documentElement.classList;x.remove("-nojs");x.add("-js")})()'
+    }
+}
