@@ -12,11 +12,9 @@ global:
 root:
   base: "./"
   inlinePath: "Templates"
-  inlineAssets: true
 
 tasks:
   scssLint: false
-  jsLint: false
   fonts: false
   images: false
   static: false
@@ -24,4 +22,3 @@ tasks:
   pipeline:
     - js
     - css
-    - compress
