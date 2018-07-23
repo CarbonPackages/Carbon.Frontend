@@ -3,42 +3,44 @@ import domReady from "./domReady";
 import focusWithin from "./focusWithin";
 import bubbleUntil from "./bubbleUntil";
 
-const KEY = {
-    tab: 9,
-    escape: 27
+const DEFAULTS = {
+    key: {
+        tab: 9,
+        escape: 27
+    },
+    selector: {
+        header: ".page-header",
+        navigation: ".page-navigation",
+        hamburger: ".hamburger-icon",
+        focusable: [
+            "a[href]",
+            "area[href]",
+            "input:not([disabled])",
+            "select:not([disabled])",
+            "textarea:not([disabled])",
+            "button:not([disabled])",
+            "iframe",
+            "object",
+            "embed",
+            "[contenteditable]",
+            "[tabindex]:not([tabindex^='-'])"
+        ].join(","),
+        openOnTap: ".nav-element.-hassub > a.nav-link.-level1"
+    },
+    menuOpen: "-menuopen",
+    htmlElement: document.documentElement,
+    body: document.body,
+    isTouch: "ontouchstart" in document.documentElement,
+    focusWithin: document
 };
 
-const DEFAULT_SELECTOR = {
-    header: ".page-header",
-    navigation: ".page-navigation",
-    hamburger: ".hamburger-icon",
-    focusable: [
-        "a[href]",
-        "area[href]",
-        "input:not([disabled])",
-        "select:not([disabled])",
-        "textarea:not([disabled])",
-        "button:not([disabled])",
-        "iframe",
-        "object",
-        "embed",
-        "[contenteditable]",
-        "[tabindex]:not([tabindex^='-'])"
-    ].join(","),
-    openOnTap: ".nav-element.-hassub > a.nav-link.-level1"
-};
-
-const DEFAULT_CLASSES = {
-    focus: "focus-within",
-    menuOpen: "-menuopen"
-};
-
-const HTML_ELEMENT = document.documentElement;
-const IS_TOUCH = "ontouchstart" in HTML_ELEMENT;
-
-export default function({ selector = {}, classes = {} } = {}) {
-    let select = Object.assign({}, DEFAULT_SELECTOR, selector);
-    let cssClasses = Object.assign({}, DEFAULT_CLASSES, classes);
+export default function({
+    selector = {},
+    menuOpen = DEFAULTS.menuOpen,
+    focusWithin = DEFAULTS.focusWithin,
+    isTouch = DEFAULTS.isTouch
+} = {}) {
+    let select = Object.assign({}, DEFAULTS.selector, selector);
     let header;
     let navigation;
     let hamburger;
@@ -50,13 +52,13 @@ export default function({ selector = {}, classes = {} } = {}) {
     onReady();
     addGatorEvents();
 
-    if (cssClasses.focus) {
-        focusWithin(cssClasses.focus);
+    if (focusWithin) {
+        focusWithin(focusWithin);
     }
 
     function onReady() {
         domReady(() => {
-            if (document.body.classList.contains(cssClasses.menuOpen)) {
+            if (DEFAULTS.body.classList.contains(menuOpen)) {
                 menuIsOpen = true;
             }
             header = document.querySelector(select.header);
@@ -70,7 +72,7 @@ export default function({ selector = {}, classes = {} } = {}) {
                         ...navigation.querySelectorAll(select.focusable)
                     ];
 
-                    if (select.openOnTap && cssClasses.focus && IS_TOUCH) {
+                    if (select.openOnTap && isTouch) {
                         submenuLinks = [
                             ...navigation.querySelectorAll(select.openOnTap)
                         ];
@@ -83,13 +85,13 @@ export default function({ selector = {}, classes = {} } = {}) {
 
     function addGatorEvents() {
         Gator(window).on("resize", checkSize);
-        Gator(HTML_ELEMENT).on("click", select.hamburger, function() {
+        Gator(DEFAULTS.htmlElement).on("click", select.hamburger, function() {
             toggleMenu();
             this.blur();
         });
 
-        if (select.openOnTap && cssClasses.focus && IS_TOUCH) {
-            Gator(HTML_ELEMENT).on("touchend", function(event) {
+        if (select.openOnTap && isTouch) {
+            Gator(DEFAULTS.htmlElement).on("touchend", function(event) {
                 if (!menuIsOpen) {
                     let link = bubbleUntil(event.target, select.openOnTap);
                     if (link) {
@@ -119,21 +121,6 @@ export default function({ selector = {}, classes = {} } = {}) {
         });
     }
 
-    function navEvent(event) {
-        if (checkElement(event.target) && (IS_TOUCH || checkMobileView())) {
-            if (!$(event.target.parentNode).hasClass("nav-open")) {
-                event.preventDefault();
-                event.stopPropagation();
-                closeNav();
-                setTimeout(() => {
-                    $(event.target.parentNode).addClass(OPEN_CLASS);
-                }, 0);
-            }
-        } else {
-            $subMenus.removeClass(OPEN_CLASS);
-        }
-    }
-
     function checkSize() {
         if (hamburger) {
             let style = window.getComputedStyle(hamburger);
@@ -144,7 +131,7 @@ export default function({ selector = {}, classes = {} } = {}) {
             ) {
                 hideMenu(false);
                 setTabIndexFromNavigationElements(true);
-            } else if (!document.body.classList.contains(cssClasses.menuOpen)) {
+            } else if (!DEFAULTS.body.classList.contains(menuOpen)) {
                 setTabIndexFromNavigationElements(false);
             }
         }
@@ -169,14 +156,14 @@ export default function({ selector = {}, classes = {} } = {}) {
             // If ESCAPE key is being pressed, prevent any further
             // effects from the ESCAPE key and hide the Menu
 
-            if (event.which === KEY.escape) {
+            if (event.which === DEFAULTS.key.escape) {
                 event.preventDefault();
                 hideMenu();
             }
 
             // If TAB key is being pressed, make sure the
             // focus stays trapped within the menu
-            if (event.which === KEY.tab) {
+            if (event.which === DEFAULTS.key.tab) {
                 trapTabKey(event);
             }
         }
@@ -225,13 +212,13 @@ export default function({ selector = {}, classes = {} } = {}) {
         if (setIndex) {
             setTabIndexFromNavigationElements(false);
         }
-        document.body.classList.remove(cssClasses.menuOpen);
-        window.scrollTo(0, parseInt(document.body.style.top) * -1);
-        document.body.style.top = "";
+        DEFAULTS.body.classList.remove(menuOpen);
+        window.scrollTo(0, parseInt(DEFAULTS.body.style.top) * -1);
+        DEFAULTS.body.style.top = "";
 
         // Remove events
         try {
-            Gator(document.body).off("focus", maintainFocus);
+            Gator(DEFAULTS.body).off("focus", maintainFocus);
         } catch (error) {}
         try {
             Gator(document).off("keydown", bindKeypress);
@@ -244,11 +231,11 @@ export default function({ selector = {}, classes = {} } = {}) {
         menuIsOpen = true;
 
         setTabIndexFromNavigationElements(true);
-        document.body.style.top = `-${window.pageYOffset}px`;
-        document.body.classList.add(cssClasses.menuOpen);
+        DEFAULTS.body.style.top = `-${window.pageYOffset}px`;
+        DEFAULTS.body.classList.add(menuOpen);
 
         // Add events
-        Gator(document.body).on("focus", maintainFocus);
+        Gator(DEFAULTS.body).on("focus", maintainFocus);
         Gator(document).on("keydown", bindKeypress);
 
         triggerEvent("mobileMenu.open");
