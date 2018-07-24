@@ -1,6 +1,6 @@
 import Gator from "gator";
 import domReady from "./domReady";
-import focusWithin from "./focusWithin";
+import focusWithinFunc from "./focusWithin";
 import bubbleUntil from "./bubbleUntil";
 
 const DEFAULTS = {
@@ -53,7 +53,7 @@ export default function({
     addGatorEvents();
 
     if (focusWithin) {
-        focusWithin(focusWithin);
+        focusWithinFunc(focusWithin);
     }
 
     function onReady() {
