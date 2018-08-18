@@ -1,9 +1,11 @@
-@mixin breakout {
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-}
+@mixin breakout($position: relative) {
+  @if $position {
+    position: $position;
+  }
 
-@mixin reset-breakout {
-  margin-left: inherit;
-  margin-right: inherit;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vh;
 }
