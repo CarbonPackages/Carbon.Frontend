@@ -212,6 +212,7 @@ export default function({
         if (setIndex) {
             setTabIndexFromNavigationElements(false);
         }
+        DEFAULTS.htmlElement.classList.remove(menuOpen);
         DEFAULTS.body.classList.remove(menuOpen);
         window.scrollTo(0, parseInt(DEFAULTS.body.style.top) * -1);
         DEFAULTS.body.style.top = "";
@@ -232,6 +233,7 @@ export default function({
 
         setTabIndexFromNavigationElements(true);
         DEFAULTS.body.style.top = `-${window.pageYOffset}px`;
+        DEFAULTS.htmlElement.classList.add(menuOpen);
         DEFAULTS.body.classList.add(menuOpen);
 
         // Add events
