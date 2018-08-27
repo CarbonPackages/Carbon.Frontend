@@ -61,7 +61,7 @@ function isActiveState() {
 function addButton() {
     if (
         !NEOS_DOC.querySelector(
-            `button.${NAMESPACE}.${settings.className}[title=${settings.title}]`
+            `button.${NAMESPACE}.${settings.className}[title="${settings.title.replace(/' '/, '\ ')}"]`
         )
     ) {
         let button = NEOS_DOC.createElement("button");
