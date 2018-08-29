@@ -47,3 +47,11 @@
 @function is-position($value) {
   @return is-length($value) or is-percentage($value) or index("top" "right" "bottom" "left" "center", $value) != null;
 }
+
+@function strip-unit($number) {
+  @if is-number($number) and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}

@@ -26,8 +26,6 @@ const Carbon = function(key, item) {
         }
         return OBJ;
     }
-
-    console.warn(`There is no Carbon item with the key '${key}'`);
     return null;
 };
 Object.freeze(Carbon);
