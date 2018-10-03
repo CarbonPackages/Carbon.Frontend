@@ -29,7 +29,6 @@ const DEFAULTS = {
     },
     menuOpen: "-menuopen",
     htmlElement: document.documentElement,
-    body: document.body,
     isTouch: "ontouchstart" in document.documentElement,
     focusWithin: document
 };
@@ -58,7 +57,7 @@ export default function({
 
     function onReady() {
         domReady(() => {
-            if (DEFAULTS.body.classList.contains(menuOpen)) {
+            if (document.body.classList.contains(menuOpen)) {
                 menuIsOpen = true;
             }
             header = document.querySelector(select.header);
@@ -131,7 +130,7 @@ export default function({
             ) {
                 hideMenu(false);
                 setTabIndexFromNavigationElements(true);
-            } else if (!DEFAULTS.body.classList.contains(menuOpen)) {
+            } else if (!document.body.classList.contains(menuOpen)) {
                 setTabIndexFromNavigationElements(false);
             }
         }
@@ -213,13 +212,13 @@ export default function({
             setTabIndexFromNavigationElements(false);
         }
         DEFAULTS.htmlElement.classList.remove(menuOpen);
-        DEFAULTS.body.classList.remove(menuOpen);
-        window.scrollTo(0, parseInt(DEFAULTS.body.style.top) * -1);
-        DEFAULTS.body.style.top = "";
+        document.body.classList.remove(menuOpen);
+        window.scrollTo(0, parseInt(document.body.style.top) * -1);
+        document.body.style.top = "";
 
         // Remove events
         try {
-            Gator(DEFAULTS.body).off("focus", maintainFocus);
+            Gator(document.body).off("focus", maintainFocus);
         } catch (error) {}
         try {
             Gator(document).off("keydown", bindKeypress);
@@ -232,12 +231,12 @@ export default function({
         menuIsOpen = true;
 
         setTabIndexFromNavigationElements(true);
-        DEFAULTS.body.style.top = `-${window.pageYOffset}px`;
+        document.body.style.top = `-${window.pageYOffset}px`;
         DEFAULTS.htmlElement.classList.add(menuOpen);
-        DEFAULTS.body.classList.add(menuOpen);
+        document.body.classList.add(menuOpen);
 
         // Add events
-        Gator(DEFAULTS.body).on("focus", maintainFocus);
+        Gator(document.body).on("focus", maintainFocus);
         Gator(document).on("keydown", bindKeypress);
 
         triggerEvent("mobileMenu.open");

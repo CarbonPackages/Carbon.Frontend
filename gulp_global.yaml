@@ -1,7 +1,5 @@
 info:
-  author: 'Jon Uhlmann'
-  homepage: 'https://github.com/CarbonPackages/Carbon.Frontend'
-  package: 'Carbon.Frontend'
+  banner: false
 
 global:
   mergeConfigFromPackages: false
@@ -10,8 +8,7 @@ global:
     enable: false
 
 root:
-  base: "./"
-  inlinePath: "Templates"
+  base: './'
 
 tasks:
   scssLint: false
@@ -19,6 +16,10 @@ tasks:
   images: false
   static: false
   svgSprite: false
+  css:
+    sourceMaps: false
+  js:
+    sourceMaps: false
   pipeline:
     - js
     - css
