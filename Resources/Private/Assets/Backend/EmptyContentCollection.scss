@@ -19,7 +19,7 @@
   }
 }
 
-.neos-contentcollection > [class^="style__addEmptyContentCollectionOverlay"] {
+%emptyContentCollection {
   $height: 41px;
 
   cursor: pointer;
@@ -45,10 +45,6 @@
 
   &::before {
     content: "Click here to add content";
-
-    // [data-lang="de"] & {
-    //   content: "Hier klicken um Inhalt hinzuzufügen";
-    // }
   }
 
   &:hover {
@@ -57,4 +53,13 @@
       opacity: 1;
     }
   }
+}
+
+.neos-contentcollection > [data-__neos-fusion-path*="removedContent"]:first-child,
+.neos-contentcollection > [class^="style__addEmptyContentCollectionOverlay"] {
+  @extend %emptyContentCollection;
+}
+
+.neos-contentcollection > [data-__neos-fusion-path*="removedContent"]:first-child {
+  box-shadow: 0 0 0 2px rgba(#000, 0.3);
 }
