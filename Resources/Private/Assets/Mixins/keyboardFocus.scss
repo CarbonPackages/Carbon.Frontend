@@ -1,0 +1,18 @@
+@mixin keyboard-focus-outline($color: currentColor, $offset: 2px, $width: 2px) {
+  &:not(:hover):focus {
+    outline: $width auto $color;
+    outline-offset: $offset;
+  }
+}
+
+@mixin keyboard-focus-shadow($color: currentColor, $shadow: 0 0 2px) {
+  &:not(:hover):focus {
+    box-shadow: $shadow $color;
+  }
+}
+
+@mixin keyboard-focus-underline {
+  &:not(:hover):focus {
+    text-decoration: underline;
+  }
+}
