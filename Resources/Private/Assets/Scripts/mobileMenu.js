@@ -10,8 +10,9 @@ const DEFAULTS = {
     },
     selector: {
         header: ".page-header",
-        navigation: ".page-navigation",
+        navigation: ".mainnav",
         hamburger: ".hamburger-icon",
+        openOnTap: ".mainnav__element--hassub > a.mainnav__link--level1",
         focusable: [
             "a[href]",
             "area[href]",
@@ -24,8 +25,7 @@ const DEFAULTS = {
             "embed",
             "[contenteditable]",
             "[tabindex]:not([tabindex^='-'])"
-        ].join(","),
-        openOnTap: ".nav-element.-hassub > a.nav-link.-level1"
+        ].join(",")
     },
     menuOpen: "-menuopen",
     htmlElement: document.documentElement,
@@ -37,7 +37,8 @@ export default function({
     selector = {},
     menuOpen = DEFAULTS.menuOpen,
     focusWithin = DEFAULTS.focusWithin,
-    isTouch = DEFAULTS.isTouch
+    isTouch = DEFAULTS.isTouch,
+    setTop = true
 } = {}) {
     let select = Object.assign({}, DEFAULTS.selector, selector);
     let header;
@@ -213,8 +214,10 @@ export default function({
         }
         DEFAULTS.htmlElement.classList.remove(menuOpen);
         document.body.classList.remove(menuOpen);
-        window.scrollTo(0, parseInt(document.body.style.top) * -1);
-        document.body.style.top = "";
+        if (setTop) {
+            window.scrollTo(0, parseInt(document.body.style.top) * -1);
+            document.body.style.top = "";
+        }
 
         // Remove events
         try {
@@ -231,7 +234,9 @@ export default function({
         menuIsOpen = true;
 
         setTabIndexFromNavigationElements(true);
-        document.body.style.top = `-${window.pageYOffset}px`;
+        if (setTop) {
+            document.body.style.top = `-${window.pageYOffset}px`;
+        }
         DEFAULTS.htmlElement.classList.add(menuOpen);
         document.body.classList.add(menuOpen);
 
