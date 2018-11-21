@@ -8,5 +8,6 @@ node_modules
 .DS_Store
 .sass-cache
 
+/gulp_local.yaml
 /Build
 /yarn.lock
