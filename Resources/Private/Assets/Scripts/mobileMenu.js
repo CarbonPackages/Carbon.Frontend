@@ -38,7 +38,7 @@ export default function({
     menuOpen = DEFAULTS.menuOpen,
     focusWithin = DEFAULTS.focusWithin,
     isTouch = DEFAULTS.isTouch,
-    setTop = true
+    setTop = false
 } = {}) {
     let select = Object.assign({}, DEFAULTS.selector, selector);
     let header;

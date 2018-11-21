@@ -26,6 +26,7 @@
             ".jshintrc",
             ".nvmrc",
             ".prettierignore",
+            ".prettierrc",
             ".stylelintrc",
             ".yarnclean",
             "CODE_OF_CONDUCT.md",
