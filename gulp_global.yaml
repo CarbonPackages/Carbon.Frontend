@@ -9,6 +9,8 @@ global:
 
 root:
   base: './'
+  dest: 'Resources/Private'
+  watch: 'Resources/Private/**'
 
 tasks:
   scssLint: false
@@ -16,10 +18,14 @@ tasks:
   images: false
   static: false
   svgSprite: false
-  css:
-    sourceMaps: false
+  css: false
   js:
     sourceMaps: false
+    dest: Exported
+    rollup:
+      format: esm
+      plugins:
+        terser: false
   pipeline:
     - js
-    - css
+    - scss

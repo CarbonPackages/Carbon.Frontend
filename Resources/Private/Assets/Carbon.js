@@ -1,3 +1,3 @@
 import Carbon from "./Scripts";
 
-window.Carbon = Carbon;
+export { Carbon };

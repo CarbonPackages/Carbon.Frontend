@@ -4,3 +4,5 @@ if (typeof Carbon == "function") {
     Carbon("ButtonContextBar", ButtonContextBar);
     Carbon("NeosEvents", NeosEvents);
 }
+
+export { NeosEvents, ButtonContextBar };

@@ -1,3 +1,5 @@
+import Gator from "./Gator";
+import domReady from "./Scripts/domReady";
 import mobileMenu from "./Scripts/mobileMenu";
 
-mobileMenu();
+export { Gator, domReady, mobileMenu };

@@ -1,4 +1,4 @@
-import Gator from "gator";
+import Gator from "../Gator";
 import domReady from "./domReady";
 import focusWithinFunc from "./focusWithin";
 import bubbleUntil from "./bubbleUntil";
