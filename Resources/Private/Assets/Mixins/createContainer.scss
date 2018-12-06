@@ -1,0 +1,40 @@
+@import "assertChecks";
+
+$gutter-width: 30px !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+) !default;
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+@mixin create-container($selector: ".container", $gutter: $gutter-width) {
+  #{$selector} {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: ($gutter / 2);
+    padding-left: ($gutter / 2);
+  }
+}
+
+@mixin create-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints, $selector: ".container") {
+  #{$selector} {
+    @each $breakpoint, $container-max-width in $max-widths {
+      @include media-break-up($breakpoint, $breakpoints) {
+        width: $container-max-width;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@mixin create-container-max-fluid-widths($max-widths: $container-max-widths, $selector: ".container") {
+  @each $breakpoint, $max-width in $max-widths {
+    #{$selector}-#{$breakpoint}-mw {
+      max-width: $max-width;
+    }
+  }
+}
