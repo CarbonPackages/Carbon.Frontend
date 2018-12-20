@@ -1,5 +1,6 @@
 const IS_NEW_UI = !!(window.name == "neos-content-main");
 const SITE_DOC = window.document;
+const HTML_CLASS_LIST = SITE_DOC.documentElement.classList;
 const NEOS_DOC = IS_NEW_UI ? window.parent.document : SITE_DOC;
 const NAMESPACE = "__carbonbuttoncontextbar";
 const ICONS_BASE = `style="fill:#fff" class="neos-svg-inline--fa neos-fa-image fa-w-18" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"`;
@@ -55,17 +56,18 @@ function setButtonState(button, activeState = isActiveState()) {
 }
 
 function isActiveState() {
-    return SITE_DOC.body.classList.contains(settings.toggleClass);
+    return HTML_CLASS_LIST.contains(settings.toggleClass);
 }
 
 function addButton() {
     if (
         !NEOS_DOC.querySelector(
-            `button.${NAMESPACE}.${settings.className}[title="${settings.title.replace(/' '/, '\ ')}"]`
+            `button.${NAMESPACE}.${
+                settings.className
+            }[title="${settings.title.replace(/' '/, " ")}"]`
         )
     ) {
         let button = NEOS_DOC.createElement("button");
-        let bodyClassList = SITE_DOC.body.classList;
         button.className = `${NAMESPACE} ${settings.className}`;
         button.type = "button";
         button.title = settings.title;
@@ -112,7 +114,7 @@ function addButton() {
 
         if (NEOS_DOC[NAMESPACE][settings.toggleClass]) {
             // Set active state
-            SITE_DOC.body.classList.add(settings.toggleClass);
+            HTML_CLASS_LIST.add(settings.toggleClass);
             setButtonState(button, true);
         }
         window.onunload = () => {
@@ -129,15 +131,15 @@ function buttonCallback(button, callback) {
     button = button
         ? button
         : element
-            ? element.querySelector(`.${settings.className}`)
-            : false;
+        ? element.querySelector(`.${settings.className}`)
+        : false;
     if (button) {
         callback(button);
     }
 }
 
 function triggerButton(button) {
-    let classList = SITE_DOC.body.classList;
+    let classList = HTML_CLASS_LIST;
     classList.toggle(settings.toggleClass);
 
     // Save the state
