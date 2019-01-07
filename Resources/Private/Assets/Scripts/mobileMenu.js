@@ -208,6 +208,9 @@ export default function({
     }
 
     function hideMenu(setIndex = true) {
+        if (!menuIsOpen) {
+            return;
+        }
         menuIsOpen = false;
         if (setIndex) {
             setTabIndexFromNavigationElements(false);
@@ -231,6 +234,9 @@ export default function({
     }
 
     function showMenu() {
+        if (menuIsOpen) {
+            return;
+        }
         menuIsOpen = true;
 
         setTabIndexFromNavigationElements(true);
@@ -250,4 +256,12 @@ export default function({
     function toggleMenu() {
         return menuIsOpen ? hideMenu() : showMenu();
     }
+
+    return {
+        toggleMenu,
+        showMenu,
+        hideMenu,
+        closeSubmenus,
+        checkSize
+    };
 }

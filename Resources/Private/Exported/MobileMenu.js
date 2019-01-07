@@ -688,6 +688,10 @@ function mobileMenu ({
   }
 
   function hideMenu(setIndex = true) {
+    if (!menuIsOpen) {
+      return;
+    }
+
     menuIsOpen = false;
 
     if (setIndex) {
@@ -715,6 +719,10 @@ function mobileMenu ({
   }
 
   function showMenu() {
+    if (menuIsOpen) {
+      return;
+    }
+
     menuIsOpen = true;
     setTabIndexFromNavigationElements(true);
 
@@ -733,6 +741,14 @@ function mobileMenu ({
   function toggleMenu() {
     return menuIsOpen ? hideMenu() : showMenu();
   }
+
+  return {
+    toggleMenu,
+    showMenu,
+    hideMenu,
+    closeSubmenus,
+    checkSize
+  };
 }
 
 export { gator as Gator, domReady, mobileMenu };
