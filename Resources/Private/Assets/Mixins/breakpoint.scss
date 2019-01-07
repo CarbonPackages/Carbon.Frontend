@@ -35,7 +35,7 @@ $grid-breakpoints: (
     @return $name + 1;
   } @else {
     $n: index($breakpoint-names, $name);
-    @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+    @return if($n != null and $n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
   }
 }
 
@@ -64,7 +64,7 @@ $grid-breakpoints: (
     @if ($n == 1) {
       @return null;
     }
-    @return if($n <= length($breakpoint-names), nth($breakpoint-names, $n - 1), null);
+    @return if($n != null and $n <= length($breakpoint-names), nth($breakpoint-names, $n - 1), null);
   }
 }
 
