@@ -139,12 +139,11 @@ function buttonCallback(button, callback) {
 }
 
 function triggerButton(button) {
-    let classList = HTML_CLASS_LIST;
-    classList.toggle(settings.toggleClass);
+    HTML_CLASS_LIST.toggle(settings.toggleClass);
 
     // Save the state
     activeHref = location.href;
-    NEOS_DOC[NAMESPACE][settings.toggleClass] = classList.contains(
+    NEOS_DOC[NAMESPACE][settings.toggleClass] = HTML_CLASS_LIST.contains(
         settings.toggleClass
     );
 
@@ -156,7 +155,7 @@ function removeButton(button) {
         button.parentElement.removeChild(button);
     });
 
-    SITE_DOC.body.classList.remove(settings.toggleClass);
+    HTML_CLASS_LIST.remove(settings.toggleClass);
     NEOS_DOC[NAMESPACE][settings.toggleClass] = false;
 }
 
