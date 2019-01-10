@@ -2,6 +2,7 @@ import Gator from "../Gator";
 import domReady from "./domReady";
 import focusWithinFunc from "./focusWithin";
 import bubbleUntil from "./bubbleUntil";
+import nodeArray from "./nodeArray";
 
 const DEFAULTS = {
     key: {
@@ -66,16 +67,12 @@ export default function({
             if (header) {
                 hamburger = header.querySelector(select.hamburger);
                 navigation = header.querySelector(select.navigation);
-                focusable = [...header.querySelectorAll(select.focusable)];
+                focusable = nodeArray(select.focusable, header);
                 if (navigation) {
-                    focusableNav = [
-                        ...navigation.querySelectorAll(select.focusable)
-                    ];
+                    focusableNav = nodeArray(select.focusable, navigation);
 
                     if (select.openOnTap && isTouch) {
-                        submenuLinks = [
-                            ...navigation.querySelectorAll(select.openOnTap)
-                        ];
+                        submenuLinks = nodeArray(select.openOnTap, navigation);
                     }
                 }
                 checkSize();

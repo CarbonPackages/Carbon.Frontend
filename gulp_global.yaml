@@ -13,6 +13,7 @@ root:
   watch: 'Resources/Private/**'
 
 tasks:
+  clean: false
   scssLint: false
   fonts: false
   images: false

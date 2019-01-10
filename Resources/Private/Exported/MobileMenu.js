@@ -504,6 +504,18 @@ function bubbleUntil (element, selectorOrElement = document.documentElement, ret
   return returnAll ? elements : element;
 }
 
+function toArray (arrayLikeObject) {
+  return [].slice.call(arrayLikeObject);
+}
+
+function nodeArray (selector, context) {
+  if (!context) {
+    context = document;
+  }
+
+  return toArray(context.querySelectorAll(selector));
+}
+
 const DEFAULTS = {
   key: {
     tab: 9,
@@ -554,13 +566,13 @@ function mobileMenu ({
       if (header) {
         hamburger = header.querySelector(select.hamburger);
         navigation = header.querySelector(select.navigation);
-        focusable = [...header.querySelectorAll(select.focusable)];
+        focusable = nodeArray(select.focusable, header);
 
         if (navigation) {
-          focusableNav = [...navigation.querySelectorAll(select.focusable)];
+          focusableNav = nodeArray(select.focusable, navigation);
 
           if (select.openOnTap && isTouch) {
-            submenuLinks = [...navigation.querySelectorAll(select.openOnTap)];
+            submenuLinks = nodeArray(select.openOnTap, navigation);
           }
         }
 
