@@ -9,7 +9,7 @@
 
 ## Installation
 
-Carbon.Frontend is available via packagist. Just add `"carbon/frontend" : "^1.0"` to the require section of the composer.json or run `composer require carbon/frontend`. We use semantic-versioning so every breaking change will increase the major-version number.
+Carbon.Frontend is available via packagist. Just add `"carbon/frontend" : "^4.1"` to the require section of the composer.json or run `composer require carbon/frontend`. We use semantic-versioning so every breaking change will increase the major-version number.
 
 ## License
 
