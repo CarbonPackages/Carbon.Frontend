@@ -1,4 +1,4 @@
-import checkMatch from './checkMatch';
+import checkMatch from "./checkMatch";
 
 export default function(element, selector, topElement) {
     let parents = [];

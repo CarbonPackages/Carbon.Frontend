@@ -1,9 +1,9 @@
-import matches from './matches';
-import isNode from './isNode';
+import matches from "./matches";
+import isNode from "./isNode";
 
 export default function(element, selector) {
     if (!selector) {
-        selector = '*';
+        selector = "*";
     }
     // Check if the element is a node and if it matches the selecor
     return isNode(element) && matches(element, selector);
