@@ -138,6 +138,16 @@ function buttonCallback(button, callback) {
     }
 }
 
+function openButton(button) {
+    HTML_CLASS_LIST.add(settings.toggleClass);
+
+    // Save the state
+    activeHref = location.href;
+    NEOS_DOC[NAMESPACE][settings.toggleClass] = true;
+
+    buttonCallback(button, setButtonState);
+}
+
 function triggerButton(button) {
     HTML_CLASS_LIST.toggle(settings.toggleClass);
 
@@ -195,6 +205,12 @@ const ButtonContextBar = {
         if (options.className && options.toggleClass) {
             settings = options;
             setElement(triggerButton);
+        }
+    },
+    open: options => {
+        if (options.className && options.toggleClass) {
+            settings = options;
+            setElement(openButton);
         }
     }
 };
