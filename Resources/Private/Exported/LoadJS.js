@@ -1,4 +1,4 @@
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -107,16 +107,23 @@ var loadjs_umd = createCommonjsModule(function (module, exports) {
           maxTries = (args.numRetries || 0) + 1,
           beforeCallbackFn = args.before || devnull,
           pathStripped = path.replace(/^(css|img)!/, ''),
-          isCss,
+          isLegacyIECss,
           e;
       numTries = numTries || 0;
 
       if (/(^css!|\.css$)/.test(path)) {
-        isCss = true; // css
-
+        // css
         e = doc.createElement('link');
         e.rel = 'stylesheet';
-        e.href = pathStripped; //.replace(/^css!/, '');  // remove "css!" prefix
+        e.href = pathStripped; // tag IE9+
+
+        isLegacyIECss = 'hideFocus' in e; // use preload in IE Edge (to detect load errors)
+
+        if (isLegacyIECss && e.relList) {
+          isLegacyIECss = 0;
+          e.rel = 'preload';
+          e.as = 'style';
+        }
       } else if (/(^img!|\.(png|gif|jpg|svg)$)/.test(path)) {
         // image
         e = doc.createElement('img');
@@ -129,10 +136,10 @@ var loadjs_umd = createCommonjsModule(function (module, exports) {
       }
 
       e.onload = e.onerror = e.onbeforeload = function (ev) {
-        var result = ev.type[0]; // Note: The following code isolates IE using `hideFocus` and treats empty
-        // stylesheets as failures to get around lack of onerror support
+        var result = ev.type[0]; // treat empty stylesheets as failures to get around lack of onerror
+        // support in IE9-11
 
-        if (isCss && 'hideFocus' in e) {
+        if (isLegacyIECss) {
           try {
             if (!e.sheet.cssText.length) result = 'e';
           } catch (x) {
@@ -150,6 +157,9 @@ var loadjs_umd = createCommonjsModule(function (module, exports) {
           if (numTries < maxTries) {
             return loadFile(path, callbackFn, args, numTries);
           }
+        } else if (e.rel == 'preload' && e.as == 'style') {
+          // activate preloaded stylesheets
+          return e.rel = 'stylesheet'; // jshint ignore:line
         } // execute callback
 
 
@@ -194,9 +204,11 @@ var loadjs_umd = createCommonjsModule(function (module, exports) {
     /**
      * Initiate script load and register bundle.
      * @param {(string|string[])} paths - The file paths
-     * @param {(string|Function)} [arg1] - The bundleId or success callback
-     * @param {Function} [arg2] - The success or error callback
-     * @param {Function} [arg3] - The error callback
+     * @param {(string|Function|Object)} [arg1] - The (1) bundleId or (2) success
+     *   callback or (3) object literal with success/error arguments, numRetries,
+     *   etc.
+     * @param {(Function|Object)} [arg2] - The (1) success callback or (2) object
+     *   literal with success/error arguments, numRetries, etc.
      */
 
 
@@ -213,15 +225,26 @@ var loadjs_umd = createCommonjsModule(function (module, exports) {
         } else {
           bundleIdCache[bundleId] = true;
         }
-      } // load scripts
+      }
+
+      function loadFn(resolve, reject) {
+        loadFiles(paths, function (pathsNotFound) {
+          // execute callbacks
+          executeCallbacks(args, pathsNotFound); // resolve Promise
+
+          if (resolve) {
+            executeCallbacks({
+              success: resolve,
+              error: reject
+            }, pathsNotFound);
+          } // publish bundle load event
 
 
-      loadFiles(paths, function (pathsNotFound) {
-        // execute callbacks
-        executeCallbacks(args, pathsNotFound); // publish bundle load event
+          publish(bundleId, pathsNotFound);
+        }, args);
+      }
 
-        publish(bundleId, pathsNotFound);
-      }, args);
+      if (args.returnPromise) return new Promise(loadFn);else loadFn();
     }
     /**
      * Execute callbacks when dependencies have been satisfied.

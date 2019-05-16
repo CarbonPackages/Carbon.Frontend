@@ -536,7 +536,7 @@ const DEFAULTS = {
 function mobileMenu ({
   selector = {},
   menuOpen = DEFAULTS.menuOpen,
-  focusWithin: focusWithin$$1 = DEFAULTS.focusWithin,
+  focusWithin: focusWithin$1 = DEFAULTS.focusWithin,
   isTouch = DEFAULTS.isTouch,
   setTop = false
 } = {}) {
@@ -551,8 +551,8 @@ function mobileMenu ({
   onReady();
   addGatorEvents();
 
-  if (focusWithin$$1) {
-    focusWithin(focusWithin$$1);
+  if (focusWithin$1) {
+    focusWithin(focusWithin$1);
   }
 
   function onReady() {
