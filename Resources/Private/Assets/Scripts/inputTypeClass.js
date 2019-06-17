@@ -12,7 +12,6 @@ const touchClass = '-touch';
 const classList = document.documentElement.classList;
 
 function onMouseMove() {
-    console.log('onMouseMove');
     classList.remove(touchClass);
     classList.add(mouseClass);
     Gator(document).off('mousemove', onMouseMove);
@@ -20,7 +19,6 @@ function onMouseMove() {
 }
 
 function onTouch() {
-    console.log('onTouch');
     classList.remove(mouseClass);
     classList.add(touchClass);
     Gator(document).off('touchstart', onTouch);
