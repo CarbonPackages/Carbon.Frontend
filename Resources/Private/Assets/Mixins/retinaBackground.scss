@@ -1,4 +1,4 @@
-@mixin retina-background($file-1x, $file-2x, $size) {
+@mixin retina-background($file-1x, $file-2x, $size: false) {
   background-image: resolve($file-1x);
   @if $size {
     background-size: $size;
