@@ -55,6 +55,7 @@
   }
 }
 
+.neos-contentcollection:empty,
 .neos-contentcollection > [data-__neos-fusion-path*="removedContent"]:first-child,
 .neos-contentcollection > [class^="style__addEmptyContentCollectionOverlay"] {
   @extend %emptyContentCollection;
