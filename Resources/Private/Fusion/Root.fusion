@@ -1,5 +1,5 @@
 prototype(Neos.Neos:Page) {
-    htmlTag.attributes.class = Neos.Fusion:RawArray {
+    htmlTag.attributes.class = Neos.Fusion:DataStructure {
         live = ${node.context.inBackend ? '-backend' : '-live'}
         javascript = '-nojs'
     }
